@@ -1,0 +1,13 @@
+@mixin set-placeholder-color ($color) {
+    &::-webkit-input-placeholder,
+    &:-moz-placeholder,
+    &::-moz-placeholder,
+    :-ms-input-placeholder,
+    &::placeholder {
+        color: $color;
+    }
+}
+
+@mixin primary-font {
+    font-family: 'Roboto', arial, sans-serif;
+}
