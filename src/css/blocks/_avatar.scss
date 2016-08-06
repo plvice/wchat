@@ -1,0 +1,30 @@
+$avatar-size: 80px;
+
+.avatar {
+    border: 1px solid $primary-color;
+    border-radius: 100%;
+    display: inline-block;
+    overflow: hidden;
+    padding: 4px;
+
+    .avatar__img {
+        border-radius: 100%;
+        display: block;
+        height: $avatar-size;
+        overflow: hidden;
+        position: relative;
+        width: $avatar-size;
+
+        img {
+            border-radius: 100%;
+            left: 50%;
+            max-height: 120%;
+            max-width: 400%;
+            min-height: 100%;
+            min-width: 100%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}

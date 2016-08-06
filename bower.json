@@ -1,0 +1,23 @@
+{
+  "name": "wchat",
+  "description": "React based chat powered by Wordpress REST API",
+  "main": "index.html",
+  "authors": [
+    "p.baluk"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "node"
+  ],
+  "homepage": "index.html",
+  "devDependencies": {
+    "normalize-css": "normalize.css#^4.0.0",
+    "foundation-sites": "6.2.3",
+    "handlebars": "2.0.0",
+    "crypto-js": "^3.1.6",
+    "react": "^15.2.1"
+  },
+  "resolutions": {
+    "what-input": "~2.0.0"
+  }
+}

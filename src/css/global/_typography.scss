@@ -1,0 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,700,100&subset=latin,latin-ext);
+
+html, body {
+    @include primary-font;
+    font-size: 1rem;
+    font-weight: 300;
+}
+
+mark {
+    background: transparent;
+    color: $primary-color;
+}

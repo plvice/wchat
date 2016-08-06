@@ -1,0 +1,9 @@
+.sidebar {
+    background: radial-gradient(
+        farthest-corner at 45px 45px ,
+        $primary-color 0%,
+        $green 100%
+    );
+    padding: 20px;
+    text-align: center;
+}

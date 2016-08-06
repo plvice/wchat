@@ -1,0 +1,62 @@
+input,
+button {
+    &:focus {
+        outline-style: none;
+        box-shadow: none;
+    }
+}
+
+input[type=text],
+input[type=password] {
+    background: transparent;
+    border-color: rgba($white, 0.5);
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    box-shadow: 2px 2px 1px rgba($black, 0.05);
+    color: $white;
+    font-size: 1.3em;
+    font-weight: 100;
+    margin: 10px 0 0 0;
+    padding: 20px 10px;
+    transition: all 0.15s ease-out;
+    width: 100%;
+
+    &:focus {
+        border-color: $white;
+    }
+
+    &, &:focus {
+        @include set-placeholder-color($white);
+    }
+
+    &:valid,
+    &:valid:focus {
+        border-color: $primary-color;
+    }
+
+    &:invalid {
+        color: $white;
+    }
+}
+
+input[type=submit],
+button[type=submit] {
+    background: transparent;
+    border: 2px solid rgba($white, 0.8);
+    border-radius: 7px;
+    box-shadow: 0px 2px 2px rgba($black, 0.5);
+    color: $white;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 40px 0 0 0;
+    padding: 15px 20px;
+    transition: all 0.15s ease-out;
+    width: 100%;
+
+    &:hover,
+    &.selected {
+        background: $green;
+        border-color: $green;
+    }
+}
