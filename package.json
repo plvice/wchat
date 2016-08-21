@@ -1,10 +1,14 @@
 {
-  "name": "wchat",
-  "version": "1.0.0",
+  "name": "react-wchat",
+  "version": "0.0.1",
+  "license": "MIT",
+  "description": "wChat powered by Wordpress REST API",
   "dependencies": {},
   "devDependencies": {
+    "babel-loader": "^6.2.4",
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-react": "^6.11.1",
+    "flux": "^2.1.1",
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
     "gulp-babel": "^6.1.2",
@@ -16,15 +20,20 @@
     "gulp-csso": "^2.0.0",
     "gulp-declare": "^0.3.0",
     "gulp-handlebars": "^4.0.0",
-    "gulp-imagemin": "^3.0.2",
+    "gulp-imagemin": "^3.0.3",
     "gulp-jsclosure": "0.0.1",
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^2.3.2",
     "gulp-sequence": "^0.4.5",
     "gulp-uglify": "^2.0.0",
+    "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.9",
     "gulp-wrap": "^0.13.0",
     "npm-check-updates": "^2.8.0",
-    "stream-browserify": "^2.0.1"
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0",
+    "stream-browserify": "^2.0.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
   }
 }
