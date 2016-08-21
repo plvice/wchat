@@ -1,5 +1,8 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
+const AppDispatcher = require('../dispatchers/Dispatcher');
+const UserAction = require('../actions/User');
+const UserStore = require('../stores/User');
 
 var Login = React.createClass({
     getInitialState: function () {
@@ -9,7 +12,8 @@ var Login = React.createClass({
     },
 
     componentDidMount: function () {
-        console.log('mounted');
+        console.log('Login Component mounted');
+        UserStore.bind('change', this.userLoggedIn);
     },
 
     validateEmail: function (email) {
@@ -26,6 +30,15 @@ var Login = React.createClass({
                 avatar: avatar
             });
         }
+    },
+
+    userLogin: function (e) {
+        e.preventDefault();
+        UserAction.login('działa!');
+    },
+
+    userLoggedIn: function () {
+        console.log('user zalogowany!');
     },
 
     render: function () {
@@ -57,7 +70,7 @@ var Login = React.createClass({
                             pattern=".*\S.*"
                         />
                     </div>
-                    <button type="submit" id="login">Go to chat</button>
+                    <button type="submit" id="login" onClick={this.userLogin}>Go to chat</button>
                 </form>
             </div>
         )
