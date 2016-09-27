@@ -8,7 +8,7 @@ var AppDispatcher = new Dispatcher();
 AppDispatcher.register(function (payload) {
 	switch (payload.actionName) {
 		case 'login':
-			console.log(payload.entry);
+			UserStore.user = payload.entry;
 			UserStore.trigger('change');
       	break;
 	}

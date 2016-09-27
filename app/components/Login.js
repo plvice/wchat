@@ -3,17 +3,20 @@ const ReactDOM = require('react-dom');
 const AppDispatcher = require('../dispatchers/Dispatcher');
 const UserAction = require('../actions/User');
 const UserStore = require('../stores/User');
+const validator = require('validator');
 
 var Login = React.createClass({
     getInitialState: function () {
-        return {
-            avatar: './dist/svg/avatar.svg'
-        }
+        return UserStore.getUser();
     },
 
     componentDidMount: function () {
         console.log('Login Component mounted');
-        UserStore.bind('change', this.userLoggedIn);
+        UserStore.bind('change', this.userChanged);
+    },
+
+    componentWillUnmount: function () {
+        UserStore.unbind('change');
     },
 
     validateEmail: function (email) {
@@ -21,56 +24,126 @@ var Login = React.createClass({
         return re.test(email);
     },
 
-    handleAvatarChange: function (e) {
-        var avatar = e.target.value;
+    validateForm: function (e) {
+        e.preventDefault();
+        let inputs = this.refs; // inputs should be here
+        let input, inputElement, inputType, inputValidation;
+        let valid = true;
+        let invalidInputs = [];
 
-        if (this.validateEmail(avatar)) {
-            avatar = 'https://www.gravatar.com/avatar/' + CryptoJS.MD5(avatar).toString() + '?s=100';
+        // let's take a look at some inputs inside
+        for (var i in inputs) {
+            input = inputs[i];
+            // is there anybody?
+            if (typeof input !== 'undefined') {
+                inputElement = input.nodeName.toLowerCase();
+                // dude, are you input?
+                if (inputElement === 'input') {
+                    // ok, we have to check you
+                    inputType = input.getAttribute('type');
+                    inputValidation = this.validateInput(inputType, input.value);
+                    // are you invalid?
+                    if (!inputValidation.valid) {
+                        invalidInputs.push(input);
+                    }
+                }
+            }
+        }
+        // is there any invalid input?
+        if (invalidInputs.length === 0) {
+            console.log('user login');
+            UserAction.login(this.state);
+        }
+    },
+
+    validateInput: function (type, value) {
+        let validation;
+        // assume that input is valid - just for case
+        let input = {
+            state: 'valid',
+            valid: true
+        };
+
+        // is input not empty?
+        if (value === '') {
+            // damn. it's empty.
+            input.valid = false;
+            input.state = 'empty';
+        } else {
+            // yeah. it's not empty
+            switch (type) {
+                case 'email':
+                validation = validator.isEmail(value);
+                if (!validation) {
+                    input.valid = false;
+                    input.state = 'invalidEmail';
+                }
+                break;
+
+                default:
+                input.state = 'nothingToCheck';
+            }
+        }
+
+        return input;
+    },
+
+    handleUsernameChange: function (e) {
+        var username = e.target.value;
+        this.setState({
+            nick: username
+        });
+    },
+
+    handleAvatarChange: function (e) {
+        let email = e.target.value;
+        let avatar;
+
+        if (validator.isEmail(email)) {
+            avatar = 'https://www.gravatar.com/avatar/' + CryptoJS.MD5(email).toString() + '?s=100';
             this.setState({
-                avatar: avatar
+                gravatar: avatar,
+                email: email
             });
         }
     },
 
-    userLogin: function (e) {
-        e.preventDefault();
-        UserAction.login('działa!');
-    },
-
-    userLoggedIn: function () {
-        console.log('user zalogowany!');
+    userChanged: function () {
+        console.log('user changed');
+        console.log(UserStore.user);
     },
 
     render: function () {
         return (
             <div className="login">
-                <form className="login__form">
+                <form className="login__form" onSubmit={this.validateForm} noValidate>
                     <div className="avatar">
                         <div className="avatar__img">
                             <img
-                                src={this.state.avatar}
+                                src={this.state.gravatar}
                                 alt=""
                             />
                         </div>
                     </div>
                     <div className="login__form-username">
                         <input
+                            onChange={this.handleUsernameChange}
                             type="text"
                             placeholder="Type your name"
+                            ref="username"
                             required
-                            pattern=".*\S.*"
                         />
                     </div>
                     <div className="login__form-avatar">
                         <input
                             onChange={this.handleAvatarChange}
-                            type="text"
+                            type="email"
                             placeholder="Your Gravatar (email)"
+                            ref="gravatar"
                             required
-                            pattern=".*\S.*"
                         />
                     </div>
-                    <button type="submit" id="login" onClick={this.userLogin}>Go to chat</button>
+                    <button type="submit" id="login">Go to chat</button>
                 </form>
             </div>
         )
