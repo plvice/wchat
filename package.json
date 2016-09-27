@@ -33,6 +33,7 @@
     "react": "^15.3.0",
     "react-dom": "^15.3.0",
     "stream-browserify": "^2.0.1",
+    "validator": "^5.7.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   }

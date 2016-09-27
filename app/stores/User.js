@@ -5,7 +5,7 @@ var UserStore = {
         state: 'loggedout',
         nick: '',
         email: '',
-        gravatar: ''
+        gravatar: './dist/svg/avatar.svg'
     },
 
     getUser: function () {
