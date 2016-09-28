@@ -2,7 +2,7 @@ const AppDispatcher = require('../dispatchers/Dispatcher');
 
 let UserAction = {
     login: function (entry) {
-        entry.state = 'loggedin';
+        entry.loggedIn = true;
         AppDispatcher.dispatch({
             actionName: 'login',
             entry: entry
