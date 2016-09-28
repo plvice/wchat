@@ -2,7 +2,7 @@ const MicroEvent = require('../vendor/MicroEvent');
 
 var UserStore = {
     user: {
-        state: 'loggedout',
+        loggedIn: false,
         nick: '',
         email: '',
         gravatar: './dist/svg/avatar.svg'
