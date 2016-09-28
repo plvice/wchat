@@ -51,8 +51,8 @@ var Login = React.createClass({
         }
         // is there any invalid input?
         if (invalidInputs.length === 0) {
-            console.log('user login');
             UserAction.login(this.state);
+            this.renderChatComponent();
         }
     },
 
@@ -109,8 +109,16 @@ var Login = React.createClass({
     },
 
     userChanged: function () {
-        console.log('user changed');
+        console.log('user changed. In user store:');
         console.log(UserStore.user);
+        this.setState(UserStore.getUser());
+        console.log('Login component state:');
+        console.log(this.state);
+    },
+
+    renderChatComponent: function () {
+        console.log('render chat');
+        // ReactDOM.render(<AnotherComponent />, document.getElementById('app'))
     },
 
     render: function () {
