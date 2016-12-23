@@ -4,15 +4,22 @@ const AppDispatcher = require('../dispatchers/Dispatcher');
 const UserAction = require('../actions/User');
 const UserStore = require('../stores/User');
 const validator = require('validator');
+const ChatComponent = require('./Chat');
 
 var Login = React.createClass({
     getInitialState: function () {
-        return UserStore.getUser();
+        var state = UserStore.getUser();
+        state.nick = 'Piotr';
+        state.email = 'prawdziwypiotrek@outlook.com';
+
+        // UserAction.restoreUserData(state);
+
+        return state;
     },
 
     componentDidMount: function () {
-        console.log('Login Component mounted');
-        UserStore.bind('change', this.userChanged);
+        UserStore.bind('change', this.userHasChanged);
+        this.getGravatarUrl(this.state.email);
     },
 
     componentWillUnmount: function () {
@@ -89,36 +96,37 @@ var Login = React.createClass({
     },
 
     handleUsernameChange: function (e) {
-        var username = e.target.value;
+        let username = e.target.value;
+
         this.setState({
             nick: username
         });
     },
 
-    handleAvatarChange: function (e) {
-        let email = e.target.value;
-        let avatar;
+    getGravatarUrl: function (email) {
+        let gravatar;
 
         if (validator.isEmail(email)) {
-            avatar = 'https://www.gravatar.com/avatar/' + CryptoJS.MD5(email).toString() + '?s=100';
+            gravatar = 'https://www.gravatar.com/avatar/' + CryptoJS.MD5(email).toString() + '?s=100';
             this.setState({
-                gravatar: avatar,
+                gravatar: gravatar,
                 email: email
             });
         }
     },
 
-    userChanged: function () {
-        console.log('user changed. In user store:');
-        console.log(UserStore.user);
+    handleAvatarChange: function (e) {
+        let email = e.target.value;
+        this.getGravatarUrl(email);
+    },
+
+    userHasChanged: function () {
+        // call this function when UserStore has been changed externally
         this.setState(UserStore.getUser());
-        console.log('Login component state:');
-        console.log(this.state);
     },
 
     renderChatComponent: function () {
-        console.log('render chat');
-        // ReactDOM.render(<AnotherComponent />, document.getElementById('app'))
+        ReactDOM.render(<ChatComponent />, document.getElementById('chat'));
     },
 
     render: function () {
@@ -135,6 +143,7 @@ var Login = React.createClass({
                     </div>
                     <div className="login__form-username">
                         <input
+                            value={this.state.nick}
                             onChange={this.handleUsernameChange}
                             type="text"
                             placeholder="Type your name"
@@ -144,6 +153,7 @@ var Login = React.createClass({
                     </div>
                     <div className="login__form-avatar">
                         <input
+                            value={this.state.email}
                             onChange={this.handleAvatarChange}
                             type="email"
                             placeholder="Your Gravatar (email)"
