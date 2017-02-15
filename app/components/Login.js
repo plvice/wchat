@@ -108,15 +108,18 @@ var Login = React.createClass({
 
         if (validator.isEmail(email)) {
             gravatar = 'https://www.gravatar.com/avatar/' + CryptoJS.MD5(email).toString() + '?s=100';
+
             this.setState({
-                gravatar: gravatar,
-                email: email
+                gravatar: gravatar
             });
         }
     },
 
     handleAvatarChange: function (e) {
         let email = e.target.value;
+        this.setState({
+            email: email
+        });
         this.getGravatarUrl(email);
     },
 
@@ -127,6 +130,10 @@ var Login = React.createClass({
 
     renderChatComponent: function () {
         ReactDOM.render(<ChatComponent />, document.getElementById('chat'));
+        
+        setTimeout(function () {
+            ReactDOM.unmountComponentAtNode(document.getElementById('app'));
+        }, 1000);
     },
 
     render: function () {

@@ -4,6 +4,32 @@
         $primary-color 0%,
         $green 100%
     );
-    padding: 20px;
+    height: 100vh;
+    overflow: hidden;
     text-align: center;
+}
+
+.sidebar__content {
+    padding: 20px;
+
+    &:after {
+        background: $body;
+        box-shadow: 0px 0px 12px #999;
+        content: '';
+        display: block;
+        height: 9999px;
+        margin: -95px 0 0 -40px;
+        transform: rotate(-14deg);
+        width: 1000%;
+    }
+
+    // &:before {
+    //     background: rgba($body, 0.5);
+    //     content: '';
+    //     display: block;
+    //     height: 9999px;
+    //     margin: -95px 0 0 -40px;
+    //     transform: rotate(-10deg);
+    //     width: 1000%;
+    // }
 }

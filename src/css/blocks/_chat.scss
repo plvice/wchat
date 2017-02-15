@@ -1,3 +1,6 @@
 .chat {
-    background: #eee;
+    background: $body;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 50px;
 }

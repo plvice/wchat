@@ -21524,15 +21524,18 @@
 	
 	        if (validator.isEmail(email)) {
 	            gravatar = 'https://www.gravatar.com/avatar/' + CryptoJS.MD5(email).toString() + '?s=100';
+	
 	            this.setState({
-	                gravatar: gravatar,
-	                email: email
+	                gravatar: gravatar
 	            });
 	        }
 	    },
 	
 	    handleAvatarChange: function handleAvatarChange(e) {
 	        var email = e.target.value;
+	        this.setState({
+	            email: email
+	        });
 	        this.getGravatarUrl(email);
 	    },
 	
@@ -21543,6 +21546,10 @@
 	
 	    renderChatComponent: function renderChatComponent() {
 	        ReactDOM.render(React.createElement(ChatComponent, null), document.getElementById('chat'));
+	
+	        setTimeout(function () {
+	            ReactDOM.unmountComponentAtNode(document.getElementById('app'));
+	        }, 1000);
 	    },
 	
 	    render: function render() {
@@ -24687,11 +24694,6 @@
 	            'div',
 	            { className: 'app' },
 	            React.createElement(
-	                'header',
-	                { className: 'header' },
-	                'header'
-	            ),
-	            React.createElement(
 	                'section',
 	                { className: 'app__wrap' },
 	                React.createElement(
@@ -24699,23 +24701,215 @@
 	                    { className: 'app__wrap-aside sidebar' },
 	                    React.createElement(
 	                        'div',
-	                        { className: 'avatar' },
+	                        { className: 'sidebar__content' },
 	                        React.createElement(
 	                            'div',
-	                            { className: 'avatar__img' },
-	                            React.createElement('img', { src: this.state.user.gravatar, alt: '' })
+	                            { className: 'avatar' },
+	                            React.createElement(
+	                                'div',
+	                                { className: 'avatar__img' },
+	                                React.createElement('img', { src: this.state.user.gravatar, alt: '' })
+	                            )
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'username' },
+	                            this.state.user.nick
 	                        )
-	                    ),
-	                    React.createElement(
-	                        'div',
-	                        { className: 'username' },
-	                        this.state.user.nick
 	                    )
 	                ),
 	                React.createElement(
 	                    'div',
 	                    { className: 'app__wrap-content chat' },
-	                    'sadas'
+	                    React.createElement(
+	                        'div',
+	                        { className: 'message' },
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__top' },
+	                            React.createElement(
+	                                'div',
+	                                { className: 'avatar' },
+	                                React.createElement(
+	                                    'div',
+	                                    { className: 'avatar__img' },
+	                                    React.createElement('img', { src: this.state.user.gravatar, alt: '' })
+	                                )
+	                            )
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__body' },
+	                            'Super apka! Kiedy można ściągać ze sklepu Googla?'
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__footer' },
+	                            'Dziś, 15:08'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'message message--important' },
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__top' },
+	                            React.createElement(
+	                                'div',
+	                                { className: 'avatar' },
+	                                React.createElement(
+	                                    'div',
+	                                    { className: 'avatar__img' },
+	                                    React.createElement('img', { src: this.state.user.gravatar, alt: '' })
+	                                )
+	                            )
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__body' },
+	                            'Super apka! Kiedy można ściągać ze sklepu Googla?'
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__footer' },
+	                            'Dziś, 15:08'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'message' },
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__top' },
+	                            React.createElement(
+	                                'div',
+	                                { className: 'avatar' },
+	                                React.createElement(
+	                                    'div',
+	                                    { className: 'avatar__img' },
+	                                    React.createElement('img', { src: this.state.user.gravatar, alt: '' })
+	                                )
+	                            )
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__body' },
+	                            'Super apka! Kiedy można ściągać ze sklepu Googla?'
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__footer' },
+	                            'Dziś, 15:08'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'message' },
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__top' },
+	                            React.createElement(
+	                                'div',
+	                                { className: 'avatar' },
+	                                React.createElement(
+	                                    'div',
+	                                    { className: 'avatar__img' },
+	                                    React.createElement('img', { src: this.state.user.gravatar, alt: '' })
+	                                )
+	                            )
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__body' },
+	                            'Super apka! Kiedy można ściągać ze sklepu Googla?'
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__footer' },
+	                            'Dziś, 15:08'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'message' },
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__top' },
+	                            React.createElement(
+	                                'div',
+	                                { className: 'avatar' },
+	                                React.createElement(
+	                                    'div',
+	                                    { className: 'avatar__img' },
+	                                    React.createElement('img', { src: this.state.user.gravatar, alt: '' })
+	                                )
+	                            )
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__body' },
+	                            'Super apka! Kiedy można ściągać ze sklepu Googla?'
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__footer' },
+	                            'Dziś, 15:08'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'message' },
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__top' },
+	                            React.createElement(
+	                                'div',
+	                                { className: 'avatar' },
+	                                React.createElement(
+	                                    'div',
+	                                    { className: 'avatar__img' },
+	                                    React.createElement('img', { src: this.state.user.gravatar, alt: '' })
+	                                )
+	                            )
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__body' },
+	                            'Super apka! Kiedy można ściągać ze sklepu Googla?'
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__footer' },
+	                            'Dziś, 15:08'
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'message' },
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__top' },
+	                            React.createElement(
+	                                'div',
+	                                { className: 'avatar' },
+	                                React.createElement(
+	                                    'div',
+	                                    { className: 'avatar__img' },
+	                                    React.createElement('img', { src: this.state.user.gravatar, alt: '' })
+	                                )
+	                            )
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__body' },
+	                            'Super apka! Kiedy można ściągać ze sklepu Googla?'
+	                        ),
+	                        React.createElement(
+	                            'div',
+	                            { className: 'message__footer' },
+	                            'Dziś, 15:08'
+	                        )
+	                    )
 	                )
 	            )
 	        );
