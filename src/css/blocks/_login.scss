@@ -7,11 +7,7 @@
     position: absolute;
     transition: margin 0.5s ease-out;
     width: 100%;
-    z-index: 1;
-
-    &--hidden {
-        margin-left: -100%;
-    }
+    z-index: 2;
 
     &:after {
         background: radial-gradient(ellipse farthest-corner at center, rgba($black, 0.7), transparent);
@@ -22,8 +18,27 @@
         position: absolute;
         top: 0;
         width: 100%;
-        z-index: 1;
+        z-index: 2;
     }
+}
+
+@keyframes hideLoginScreen {
+    0% {
+        clip-path: circle(100% at center);
+    }
+
+    50% {
+        clip-path: circle(50% at center);
+    }
+
+    100% {
+        clip-path: circle(0px at center);
+    }
+}
+
+.login--hidden {
+    animation: 0.6s hideLoginScreen ease-out;
+    clip-path: circle(0px at center);
 }
 
 .login__form {
@@ -37,7 +52,7 @@
     }
     padding: 10px 0;
     text-align: center;
-    z-index: 2;
+    z-index: 3;
 
     &-username,
     &-avatar {
