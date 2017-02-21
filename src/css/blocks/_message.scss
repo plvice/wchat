@@ -1,0 +1,39 @@
+$in-important: '.message--important &';
+$important-color: #ff4545;
+
+.message {
+    background: $message;
+    border-radius: 10px;
+    margin: 0 0 3em 0;
+    padding: 1.4em 1.4em 1.4em 125px;
+    position: relative;
+
+    &--important {
+        background: $important-color;
+    }
+}
+
+.message__top {
+    left: 1.4em;
+    position: absolute;
+    top: 0;
+    transform: translateY(-30%);
+}
+
+.message__body {
+    line-height: 1.4;
+
+    #{$in-important} {
+        color: $white;
+    }
+}
+
+.message__footer {
+    color: darken($message, 30%);
+    font-size: 0.85em;
+    margin: 0.5em 0 0 0;
+
+    #{$in-important} {
+        color: lighten($important-color, 35%);
+    }
+}

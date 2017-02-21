@@ -21544,63 +21544,79 @@
 	        this.setState(UserStore.getUser());
 	    },
 	
+	    hideLoginScreen: function hideLoginScreen() {
+	        document.getElementsByClassName('login')[0].classList.add('login--hidden');
+	        document.getElementsByClassName('ball')[0].classList.add('wrecking');
+	
+	        // setTimeout(function () {
+	        //     ReactDOM.unmountComponentAtNode(document.getElementById('app'));
+	        // }, 1500);
+	    },
+	
 	    renderChatComponent: function renderChatComponent() {
+	        var that = this;
+	
 	        ReactDOM.render(React.createElement(ChatComponent, null), document.getElementById('chat'));
 	
 	        setTimeout(function () {
-	            ReactDOM.unmountComponentAtNode(document.getElementById('app'));
-	        }, 1000);
+	            that.hideLoginScreen();
+	        }, 100);
 	    },
 	
 	    render: function render() {
 	        return React.createElement(
 	            'div',
-	            { className: 'login' },
+	            { className: 'wrap' },
 	            React.createElement(
-	                'form',
-	                { className: 'login__form', onSubmit: this.validateForm, noValidate: true },
+	                'div',
+	                { className: 'login' },
 	                React.createElement(
-	                    'div',
-	                    { className: 'avatar' },
+	                    'form',
+	                    { className: 'login__form', onSubmit: this.validateForm, noValidate: true },
 	                    React.createElement(
 	                        'div',
-	                        { className: 'avatar__img' },
-	                        React.createElement('img', {
-	                            src: this.state.gravatar,
-	                            alt: ''
+	                        { className: 'avatar' },
+	                        React.createElement(
+	                            'div',
+	                            { className: 'avatar__img' },
+	                            React.createElement('img', {
+	                                src: this.state.gravatar,
+	                                alt: ''
+	                            })
+	                        )
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'login__form-username' },
+	                        React.createElement('input', {
+	                            value: this.state.nick,
+	                            onChange: this.handleUsernameChange,
+	                            type: 'text',
+	                            placeholder: 'Type your name',
+	                            ref: 'username',
+	                            required: true
 	                        })
+	                    ),
+	                    React.createElement(
+	                        'div',
+	                        { className: 'login__form-avatar' },
+	                        React.createElement('input', {
+	                            value: this.state.email,
+	                            onChange: this.handleAvatarChange,
+	                            type: 'email',
+	                            placeholder: 'Your Gravatar (email)',
+	                            ref: 'gravatar',
+	                            required: true
+	                        })
+	                    ),
+	                    React.createElement(
+	                        'button',
+	                        { type: 'submit', id: 'login' },
+	                        'Go to chat'
 	                    )
-	                ),
-	                React.createElement(
-	                    'div',
-	                    { className: 'login__form-username' },
-	                    React.createElement('input', {
-	                        value: this.state.nick,
-	                        onChange: this.handleUsernameChange,
-	                        type: 'text',
-	                        placeholder: 'Type your name',
-	                        ref: 'username',
-	                        required: true
-	                    })
-	                ),
-	                React.createElement(
-	                    'div',
-	                    { className: 'login__form-avatar' },
-	                    React.createElement('input', {
-	                        value: this.state.email,
-	                        onChange: this.handleAvatarChange,
-	                        type: 'email',
-	                        placeholder: 'Your Gravatar (email)',
-	                        ref: 'gravatar',
-	                        required: true
-	                    })
-	                ),
-	                React.createElement(
-	                    'button',
-	                    { type: 'submit', id: 'login' },
-	                    'Go to chat'
 	                )
-	            )
+	            ),
+	            React.createElement('div', { className: 'ball' })
 	        );
 	    }
 	});
@@ -24677,16 +24693,16 @@
 	
 	    componentDidMount: function componentDidMount() {
 	        this.showChat();
+	        this.adjustChatScroll();
 	    },
 	
 	    componentWillUnmount: function componentWillUnmount() {},
 	
-	    showChat: function showChat() {
-	        var tmt = function tmt() {
-	            document.getElementsByClassName('app')[0].classList.add('app--visible');
-	        };
+	    showChat: function showChat() {},
 	
-	        setTimeout(tmt, 200);
+	    adjustChatScroll: function adjustChatScroll() {
+	        var chat = document.getElementsByClassName('chat')[0];
+	        chat.scrollTop = chat.scrollHeight;
 	    },
 	
 	    render: function render() {

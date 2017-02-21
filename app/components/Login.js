@@ -128,48 +128,62 @@ var Login = React.createClass({
         this.setState(UserStore.getUser());
     },
 
-    renderChatComponent: function () {
-        ReactDOM.render(<ChatComponent />, document.getElementById('chat'));
-        
+    hideLoginScreen: function () {
+        document.getElementsByClassName('login')[0].classList.add('login--hidden');
+        document.getElementsByClassName('ball')[0].classList.add('wrecking');
+
         setTimeout(function () {
             ReactDOM.unmountComponentAtNode(document.getElementById('app'));
-        }, 1000);
+        }, 2000);
+    },
+
+    renderChatComponent: function () {
+        var that = this;
+
+        ReactDOM.render(<ChatComponent />, document.getElementById('chat'));
+
+        setTimeout(function () {
+            that.hideLoginScreen();
+        }, 100);
     },
 
     render: function () {
         return (
-            <div className="login">
-                <form className="login__form" onSubmit={this.validateForm} noValidate>
-                    <div className="avatar">
-                        <div className="avatar__img">
-                            <img
-                                src={this.state.gravatar}
-                                alt=""
+            <div className="wrap">
+                <div className="login">
+                    <form className="login__form" onSubmit={this.validateForm} noValidate>
+                        <div className="avatar">
+                            <div className="avatar__img">
+                                <img
+                                    src={this.state.gravatar}
+                                    alt=""
+                                />
+                            </div>
+                        </div>
+                        <div className="login__form-username">
+                            <input
+                                value={this.state.nick}
+                                onChange={this.handleUsernameChange}
+                                type="text"
+                                placeholder="Type your name"
+                                ref="username"
+                                required
                             />
                         </div>
-                    </div>
-                    <div className="login__form-username">
-                        <input
-                            value={this.state.nick}
-                            onChange={this.handleUsernameChange}
-                            type="text"
-                            placeholder="Type your name"
-                            ref="username"
-                            required
-                        />
-                    </div>
-                    <div className="login__form-avatar">
-                        <input
-                            value={this.state.email}
-                            onChange={this.handleAvatarChange}
-                            type="email"
-                            placeholder="Your Gravatar (email)"
-                            ref="gravatar"
-                            required
-                        />
-                    </div>
-                    <button type="submit" id="login">Go to chat</button>
-                </form>
+                        <div className="login__form-avatar">
+                            <input
+                                value={this.state.email}
+                                onChange={this.handleAvatarChange}
+                                type="email"
+                                placeholder="Your Gravatar (email)"
+                                ref="gravatar"
+                                required
+                            />
+                        </div>
+                        <button type="submit" id="login">Go to chat</button>
+                    </form>
+                </div>
+                <div className="ball"></div>
             </div>
         )
     }
