@@ -11,6 +11,7 @@ var Login = React.createClass({
         var state = UserStore.getUser();
         state.nick = 'Piotr';
         state.email = 'prawdziwypiotrek@outlook.com';
+        state.waitingForLogin = false;
 
         // UserAction.restoreUserData(state);
 
@@ -33,6 +34,7 @@ var Login = React.createClass({
 
     validateForm: function (e) {
         e.preventDefault();
+        let that = this;
         let inputs = this.refs; // inputs should be here
         let input, inputElement, inputType, inputValidation;
         let valid = true;
@@ -58,8 +60,14 @@ var Login = React.createClass({
         }
         // is there any invalid input?
         if (invalidInputs.length === 0) {
-            UserAction.login(this.state);
-            this.fetchChatData();
+            that.setState({
+                waitingForLogin: true
+            });
+
+            setTimeout(function () {
+                that.fetchChatData();
+                UserAction.login(that.state);
+            }, 800);
         }
     },
 
@@ -150,22 +158,26 @@ var Login = React.createClass({
         .then(function (response) {
             success();
         })
-        .catch(function (error) {
-            error();
+        .catch(function (err) {
+            error(err);
         });
 
         function success() {
+            that.setState({
+                waitingForLogin: false
+            });
             that.renderChatComponent();
         }
 
-        function error() {
+        function error(err) {
             console.error('Unable to fetch data. Sorry!')
+            console.error(err);
         }
     },
 
     renderChatComponent: function () {
         var that = this;
-        
+
         ReactDOM.render(<ChatComponent />, document.getElementById('chat'));
 
         setTimeout(function () {
@@ -206,7 +218,7 @@ var Login = React.createClass({
                                 required
                             />
                         </div>
-                        <button type="submit" id="login">Go to chat</button>
+                        <button type="submit" id="login" className={this.state.waitingForLogin ? 'loading' : ''}>Go to chat</button>
                     </form>
                 </div>
                 <div className="ball"></div>
