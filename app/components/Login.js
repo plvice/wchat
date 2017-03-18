@@ -59,7 +59,7 @@ var Login = React.createClass({
         // is there any invalid input?
         if (invalidInputs.length === 0) {
             UserAction.login(this.state);
-            this.renderChatComponent();
+            this.fetchChatData();
         }
     },
 
@@ -137,9 +137,35 @@ var Login = React.createClass({
         }, 2000);
     },
 
-    renderChatComponent: function () {
+    fetchChatData: function () {
         var that = this;
 
+        fetch('http://localhost/chat/wp-json/wp/v2/comments?parent=0', {
+            method: 'get',
+            headers: {
+                "Accept": "application/json"
+            }
+        })
+        .then( response => response.json() )
+        .then(function (response) {
+            success();
+        })
+        .catch(function (error) {
+            error();
+        });
+
+        function success() {
+            that.renderChatComponent();
+        }
+
+        function error() {
+            console.error('Unable to fetch data. Sorry!')
+        }
+    },
+
+    renderChatComponent: function () {
+        var that = this;
+        
         ReactDOM.render(<ChatComponent />, document.getElementById('chat'));
 
         setTimeout(function () {
