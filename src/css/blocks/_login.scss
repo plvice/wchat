@@ -107,4 +107,23 @@
             }
         }
     }
+
+    #login {
+        position: relative;
+
+        .loader {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease-out;
+        }
+
+        &.loading {
+            color: transparent;
+
+            .loader {
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+    }
 }
