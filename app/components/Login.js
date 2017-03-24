@@ -218,7 +218,7 @@ var Login = React.createClass({
                                 required
                             />
                         </div>
-                        <button type="submit" id="login" className={this.state.waitingForLogin ? 'loading' : ''}>Go to chat</button>
+                        <button type="submit" id="login" className={this.state.waitingForLogin ? 'loading' : ''}>Go to chat <span className="loader"></span></button>
                     </form>
                 </div>
                 <div className="ball"></div>
