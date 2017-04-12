@@ -6,32 +6,87 @@ const UserStore = require('../stores/User');
 const validator = require('validator');
 const ChatComponent = require('./Chat');
 
+var dragged;
+var toRemove;
+
 var List = React.createClass({
   getInitialState: function() {
-    return {data: this.props.data};
+    var cars = this.props.data;
+    var visible = [];
+    var hidden = [];
+
+    cars.map(function (value, i){
+        if (value.visible === true) {
+            visible.push(value);
+        } else {
+            hidden.push(value);
+        }
+    });
+
+    return {
+        data: cars,
+        visibleCars: visible,
+        hiddenCars: hidden,
+        currentDragIndex: null
+    };
   },
   dragStart: function(e) {
-    this.dragged = e.currentTarget;
+    dragged = e.currentTarget;
+    var index = dragged.getAttribute('data-id');
+
+    this.setState({
+        currentDragIndex: index
+    });
+
     e.dataTransfer.effectAllowed = 'move';
     // Firefox requires dataTransfer data to be set
     e.dataTransfer.setData("text/html", e.currentTarget);
+    toRemove = dragged.parentNode;
+  },
+  removeObject: function(obj, name) {
+    obj.map(function(value, i) {
+        if (value.name === name) {
+            console.log('index to remove: ' + i);
+        }
+    });
   },
   dragEnd: function(e) {
-
-    this.dragged.style.display = "block";
-    this.dragged.parentNode.removeChild(placeholder);
-    // Update data
+    var visible = this.state.visibleCars;
+    var hidden = this.state.hiddenCars;
     var data = this.state.data;
-    var from = Number(this.dragged.dataset.id);
-    var to = Number(this.over.dataset.id);
-    if(from < to) to--;
-    if(this.nodePlacement == "after") to++;
-    data.splice(to, 0, data.splice(from, 1)[0]);
-    this.setState({data: data});
+    var group = placeholder.parentNode.getAttribute('data-group')
+
+    dragged.style.display = "block";
+
+    if (group === 'visible') {
+        console.log('moved to visible');
+        visible.push(hidden[this.state.currentDragIndex]);
+        hidden.splice(this.state.currentDragIndex, 1);
+    }
+
+    if (group === 'hidden') {
+        console.log('moved to hidden');
+        hidden.push(visible[this.state.currentDragIndex]);
+        visible.splice(this.state.currentDragIndex, 1);
+    }
+
+    placeholder.remove();
+
+    // Update data
+    data = visible.concat(hidden);
+
+    this.setState({
+        data: data,
+        visibleCars: visible,
+        hiddenCars: hidden
+    });
+
+    console.log(this.state);
+
   },
   dragOver: function(e) {
     e.preventDefault();
-    this.dragged.style.display = "none";
+    dragged.style.display = "none";
     if(e.target.className == "placeholder") return;
     this.over = e.target;
     // Inside the dragOver method
@@ -49,25 +104,57 @@ var List = React.createClass({
     }
   },
   render: function() {
-    return <ul onDragOver={this.dragOver}>
-    	{this.state.data.map(function(item, i) {
-      	return (
-        	<li
-		        data-id={i}
-            key={i}
-            draggable="true"
-            onDragEnd={this.dragEnd}
-            onDragStart={this.dragStart}
-          >
-       			{item}
-          </li>
-        )
-   	 	}, this)}
-    </ul>
+    return (
+        <div className="lists">
+        <ul id="Visible" data-group="visible" onDragOver={this.dragOver}>
+            {this.state.visibleCars.map(function(item, i) {
+                return (
+                    <li
+                        data-id={i}
+                        data-name={item.name}
+                        data-visible={item.visible}
+                        key={i}
+                        draggable="true"
+                        onDragEnd={this.dragEnd}
+                        onDragStart={this.dragStart}
+                    > 
+                        {item.name}
+                </li>
+                )
+            }, this)}
+        </ul>
+        <h2>Dupa</h2>
+        <ul id="Hidden" data-group="hidden" onDragOver={this.dragOver}>
+            {this.state.hiddenCars.map(function(item, i) {
+                return (
+                    <li
+                        data-id={i}
+                        data-name={item.name}
+                        data-visible={item.visible}
+                        key={i}
+                        draggable="true"
+                        onDragEnd={this.dragEnd}
+                        onDragStart={this.dragStart}
+                    > 
+                        {item.name}
+                </li>
+                )
+            }, this)}
+        </ul>
+    </div>
+    )
   }
 });
 
-var colors = ["Red","Green","Blue","Yellow","Black","White","Orange"];
+var colors = [
+    {name: "Audi", visible: true},
+    {name: "Ferrari", visible: true},
+    {name: "Maserati", visible: true},
+    {name: "Alfa Romeo", visible: false},
+    {name: "Peugeot", visible: false},
+    {name: "Chevrolet", visible: false},
+];
+
 var placeholder = document.createElement("li");
 placeholder.className = "placeholder";
 
@@ -258,8 +345,16 @@ var Login = React.createClass({
             <div className="wrap">
                 <div className="login">
                     <List data={colors} />
+                </div>
+                <div className="ball"></div>
+            </div>
+        )
+    }
+});
 
-                    <form className="login__form" onSubmit={this.validateForm} noValidate>
+module.exports = Login;
+
+/*<form className="login__form" onSubmit={this.validateForm} noValidate>
                         <div className="avatar">
                             <div className="avatar__img">
                                 <img
@@ -289,12 +384,4 @@ var Login = React.createClass({
                             />
                         </div>
                         <button type="submit" id="login" className={this.state.waitingForLogin ? 'loading' : ''}>Go to chat <span className="loader"></span></button>
-                    </form>
-                </div>
-                <div className="ball"></div>
-            </div>
-        )
-    }
-});
-
-module.exports = Login;
+                    </form>*/

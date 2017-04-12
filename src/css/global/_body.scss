@@ -25,6 +25,17 @@ ul {
   z-index: 99999;
 }
 li {
-  padding: 5px;
-  background:#eee
+  padding: 20px 80px;
+  background:#eee;
+  border-bottom: 1px solid #bababa;
+
+  &:last-child {
+      border-bottom: 0;
+  }
+}
+
+h2 {
+    position: relative;
+    color: #fff;
+    z-index: 9999;
 }
