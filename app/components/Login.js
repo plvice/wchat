@@ -55,18 +55,21 @@ var List = React.createClass({
     var hidden = this.state.hiddenCars;
     var data = this.state.data;
     var group = placeholder.parentNode.getAttribute('data-group')
+    var index = this.state.currentDragIndex;
 
     dragged.style.display = "block";
 
     if (group === 'visible') {
         console.log('moved to visible');
-        visible.push(hidden[this.state.currentDragIndex]);
+        hidden[index].visible = true;
+        visible.push(hidden[index]);
         hidden.splice(this.state.currentDragIndex, 1);
     }
 
     if (group === 'hidden') {
         console.log('moved to hidden');
-        hidden.push(visible[this.state.currentDragIndex]);
+        visible[index].visible = false;
+        hidden.push(visible[index]);
         visible.splice(this.state.currentDragIndex, 1);
     }
 
